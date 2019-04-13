@@ -14,7 +14,7 @@ async function find() {
 }
 
 async function findById(id) {
-  const book = await db("books")
+  let bookContent = db("books")
     .select({
       id: "books.id",
       user_id: "books.user_id",
@@ -32,7 +32,7 @@ async function findById(id) {
     .innerJoin("users", "books.user_id", "users.id")
     .where({ "books.id": id })
     .first();
-  book.reviews = await db("reviews")
+  let bookReviews = db("reviews")
     .select({
       id: "reviews.id",
       username: "users.username",
@@ -44,7 +44,12 @@ async function findById(id) {
     .where({
       "reviews.book_id": id
     });
-  return book;
+  const retrieval = await Promise.all([bookContent, bookReviews]);
+  if (retrieval) {
+    let content = retrieval[0];
+    let reviews = retrieval[1];
+    return { ...content, reviews };
+  }
 }
 
 async function create(item) {
