@@ -15,8 +15,35 @@ async function find() {
 
 async function findById(id) {
   const book = await db("books")
-    .where({ id })
+    .select({
+      id: "books.id",
+      user_id: "books.user_id",
+      imageUrl: "books.imageUrl",
+      author: "books.author",
+      name: "books.name",
+      price: "books.price",
+      publisher: "books.publisher",
+      description: "books.description",
+      username: "users.username",
+      firstName: "users.firstName",
+      lastName: "users.lastName",
+      thumbnailUrl: "users.thumbnailUrl"
+    })
+    .innerJoin("users", "books.user_id", "users.id")
+    .where({ "books.id": id })
     .first();
+  book.reviews = await db("reviews")
+    .select({
+      id: "reviews.id",
+      username: "users.username",
+      review: "reviews.review",
+      rating: "reviews.rating",
+      thumbnailUrl: "users.thumbnailUrl"
+    })
+    .innerJoin("users", "reviews.user_id", "users.id")
+    .where({
+      "reviews.book_id": id
+    });
   return book;
 }
 
