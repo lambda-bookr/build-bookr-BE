@@ -24,6 +24,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE");
       table.string("author", 40).notNullable();
       table.string("name", 40).notNullable();
+      table.integer("price").notNullable();
       table.string("publisher", 40).notNullable();
       table.string("description", 600);
       table.string("imageUrl", 256);
