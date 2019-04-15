@@ -11,7 +11,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use("/api/books", booksRouter, reviewsRouter);
+server.use("/api/books", booksRouter);
+server.use("/api/reviews", reviewsRouter);
 server.use("/api/auth", authRouter);
 
 module.exports = server;

@@ -2,22 +2,10 @@ const router = require("express").Router();
 
 const db = require("../data/helpers/reviews-model.js");
 
-router.get("/:id/reviews", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const reviews = await db.find(id);
-    if (reviews) {
-      res.status(200).json(reviews);
-    }
-  } catch (error) {
-    res.status(500).json({ message: `Reviews could not be found ${error}.` });
-  }
-});
-
-router.get("/:id/reviews/:revID", async (req, res) => {
-  const { revID } = req.params;
-  try {
-    const review = await db.findById(revID);
+    const review = await db.findById(id);
     if (review) {
       res.status(200).json(review);
     } else {
@@ -30,7 +18,7 @@ router.get("/:id/reviews/:revID", async (req, res) => {
   }
 });
 
-router.post("/:id/reviews", async (req, res) => {
+router.post("/", async (req, res) => {
   const review = req.body;
   try {
     const newReview = await db.create(review);
@@ -44,10 +32,10 @@ router.post("/:id/reviews", async (req, res) => {
   }
 });
 
-router.delete("/:id/reviews/:revID", async (req, res) => {
-  const { revID } = req.params;
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const review = await db.remove(revID);
+    const review = await db.remove(id);
     if (review) {
       res.status(200).json(review);
     } else {
@@ -62,11 +50,11 @@ router.delete("/:id/reviews/:revID", async (req, res) => {
   }
 });
 
-router.put("/:id/reviews/:revID", async (req, res) => {
-  const { revID } = req.params;
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
   const newReview = req.body;
   try {
-    const editedReview = await db.update(newReview, revID);
+    const editedReview = await db.update(newReview, id);
     if (editedReview) {
       res.status(200).json(editedReview);
     } else {
