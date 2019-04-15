@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: `Your book could not be booked ${error}.` });
+      .json({ message: `Your book could not be posted ${error}.` });
   }
 });
 
