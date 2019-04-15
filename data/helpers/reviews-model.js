@@ -14,10 +14,10 @@ async function find(id) {
       id: "reviews.id",
       review: "reviews.review",
       rating: "reviews.rating",
-      username: "profiles.username",
-      thumbnailUrl: "profiles.thumbnailUrl"
+      username: "users.username",
+      thumbnailUrl: "users.thumbnailUrl"
     })
-    .innerJoin("profiles", "reviews.user_id", "profiles.id")
+    .innerJoin("users", "reviews.user_id", "users.id")
     .orderBy("id", "asc")
     .where({ book_id: id });
   return reviews;
@@ -29,10 +29,10 @@ async function findById(id) {
       id: "reviews.id",
       review: "reviews.review",
       rating: "reviews.rating",
-      username: "profiles.username",
-      thumbnailUrl: "profiles.thumbnailUrl"
+      username: "users.username",
+      thumbnailUrl: "users.thumbnailUrl"
     })
-    .innerJoin("profiles", "reviews.user_id", "profiles.id")
+    .innerJoin("users", "reviews.user_id", "users.id")
     .where({ "reviews.id": id })
     .first();
   return review;
