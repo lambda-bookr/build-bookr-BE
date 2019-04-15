@@ -32,23 +32,37 @@ async function findById(id) {
     .innerJoin("users", "books.user_id", "users.id")
     .where({ "books.id": id })
     .first();
-  let bookReviews = db.raw(
-    `select reviews.id as id, users.username as username, reviews.review as review, reviews.rating as rating, users.thumbnailUrl as thumbnailUrl, 
-    (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as avgRating 
-    from reviews 
-    join users on reviews.user_id = users.id
-    where reviews.book_id = ${id}`
-  );
-  const retrieval = await Promise.all([bookContent, bookReviews]);
+  let bookReviews = db("reviews")
+    .select({
+      id: "reviews.id",
+      review: "reviews.review",
+      rating: "reviews.rating",
+      username: "users.username",
+      thumbnailUrl: "users.thumbnailUrl"
+    })
+    .innerJoin("users", "reviews.user_id", "users.id")
+    .where({ "reviews.book_id": id });
+  let rating = db("reviews")
+    .avg({ rating: "rating" })
+    .where({ book_id: id });
+  const retrieval = await Promise.all([bookContent, bookReviews, rating]);
   if (retrieval[0]) {
     /* This is only true if both the promise resolved AND the post exists. Checking for just the promise causes
     nonexistent posts to return an empty object and array due to my return statement returning an object by default */
     let content = retrieval[0];
     let reviews = retrieval[1];
-    let rating = reviews[0].avgRating;
-    return { ...content, rating, reviews };
+    let [rating] = retrieval[2]; // Each review has an avgRating on it, I am just grabbing the avgRating from the first review
+    return { ...content, rating: rating.rating, reviews };
   }
 }
+
+// let bookReviews = db.raw(
+//   `select reviews.id as id, users.username as username, reviews.review as review, reviews.rating as rating, users.thumbnailUrl as thumbnailUrl,
+//   (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as avgRating
+//   from reviews
+//   join users on reviews.user_id = users.id
+//   where reviews.book_id = ${id}`
+// ); combined reviews and avg rating query into one, but this only works in SQLite for now. Will try and get it working for postgreSQL
 
 async function create(item) {
   const [id] = await db("books")
