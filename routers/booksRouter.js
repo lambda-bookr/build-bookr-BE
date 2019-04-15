@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const db = require("../data/helpers/books-model.js");
+const Reviews = require("../data/helpers/reviews-model.js");
 
 router.get("/", async (req, res) => {
   try {
@@ -39,7 +40,7 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: `Your book could not be booked ${error}.` });
+      .json({ message: `Your book could not be posted ${error}.` });
   }
 });
 
@@ -78,6 +79,18 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({
       message: `The book's information could not be modified: ${error}.`
     });
+  }
+});
+
+router.get("/:id/reviews", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const reviews = await Reviews.find(id);
+    if (reviews) {
+      res.status(200).json(reviews);
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Reviews could not be found ${error}.` });
   }
 });
 

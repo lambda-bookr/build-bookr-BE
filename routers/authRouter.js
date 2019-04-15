@@ -6,7 +6,7 @@ const secret = process.env.SECRET || "It's a secret";
 
 router.post("/register", async (req, res) => {
   let { username, password, firstName, lastName } = req.body;
-  if (!username || !password || !firstName || lastName) {
+  if (!username || !password || !firstName || !lastName) {
     res.status(401).json({ message: "Please enter valid credentials." });
   } else {
     password = bcrypt.hashSync(password, 8);
