@@ -52,9 +52,9 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const newReview = req.body;
+  const review = req.body;
   try {
-    const editedReview = await db.update(newReview, id);
+    const editedReview = await db.update(review, id);
     if (editedReview) {
       res.status(200).json(editedReview);
     } else {

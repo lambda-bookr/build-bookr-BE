@@ -64,10 +64,10 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const newBook = req.body;
+  const book = req.body;
 
   try {
-    const editedBook = await db.update(newBook, id);
+    const editedBook = await db.update(book, id);
     if (editedBook) {
       res.status(200).json(editedBook);
     } else {
