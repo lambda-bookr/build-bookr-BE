@@ -4,11 +4,11 @@ const fakeBooks = require("../dummyData/fakeBooks")["books"];
 
 // const createFakeBook = () => ({
 //   author: faker.name.findName(),
-//   name: faker.commerce.productName(),
+//   title: faker.commerce.productName(),
 //   price: faker.commerce.price(),
 //   publisher: faker.company.companyName(),
 //   description: faker.lorem.paragraph(),
-//   imageUrl: faker.image.imageUrl()
+//   imageurl: faker.image.imageUrl()
 // });  used this to create fake books file in dummyData
 
 exports.seed = function(knex, Promise) {
