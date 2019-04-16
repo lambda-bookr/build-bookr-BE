@@ -37,7 +37,14 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const user = req.body;
+  const { firstName, lastName, username, password, thumbnailUrl } = req.body;
+  const user = {
+    username,
+    password,
+    first_name: firstName,
+    last_name: lastName,
+    thumbnail_url: thumbnailUrl
+  };
   try {
     const editedUser = await db.update(user, id);
     if (editedUser) {

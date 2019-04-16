@@ -31,16 +31,46 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const book = req.body;
-  try {
-    const newBook = await db.create(book);
-    if (newBook) {
-      res.status(201).json(newBook);
-    }
-  } catch (error) {
+  const {
+    title,
+    user_id,
+    author,
+    price,
+    publisher,
+    description,
+    imageUrl
+  } = req.body;
+  if (
+    !title ||
+    !user_id ||
+    !author ||
+    !price ||
+    !publisher ||
+    !description ||
+    !imageUrl
+  ) {
     res
-      .status(500)
-      .json({ message: `Your book could not be posted ${error}.` });
+      .status(401)
+      .json({ message: "Please do not leave any of the book fields blank." });
+  } else {
+    try {
+      const newBook = await db.create({
+        title,
+        user_id,
+        author,
+        price,
+        publisher,
+        description,
+        image_url: imageUrl
+      });
+      if (newBook) {
+        res.status(201).json(newBook);
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: `Your book could not be posted ${error}.` });
+    }
   }
 });
 
@@ -64,8 +94,24 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const book = req.body;
-
+  const {
+    user_id,
+    author,
+    title,
+    price,
+    publisher,
+    description,
+    imageUrl
+  } = req.body;
+  const book = {
+    user_id,
+    author,
+    title,
+    price,
+    publisher,
+    description,
+    image_url: imageUrl
+  };
   try {
     const editedBook = await db.update(book, id);
     if (editedBook) {
