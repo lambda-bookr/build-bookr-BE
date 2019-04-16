@@ -36,27 +36,22 @@ async function findById(id) {
     })
     .innerJoin("users", "books.user_id", "users.id")
     .where({ "books.id": id })
-    .first()
-    .innerJoin("reviews", "reviews.book_id", "books.id")
-    .avg("rating as rating")
-    .where({ "reviews.book_id": id });
-  let bookReviews = db("reviews")
-    .select({
-      id: "reviews.id",
-      review: "reviews.review",
-      rating: "reviews.rating",
-      username: "users.username",
-      thumbnailUrl: "users.thumbnailurl"
-    })
-    .innerJoin("users", "reviews.user_id", "users.id")
-    .where({ "reviews.book_id": id });
+    .first();
+  let bookReviews = db.raw(
+    `select reviews.id as id, users.username as username, reviews.review as review, reviews.rating as rating, users.thumbnailurl as thumbnailUrl,
+      (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as avgRating
+      from reviews
+      join users on reviews.user_id = users.id
+      where reviews.book_id = ${id}`
+  );
   const retrieval = await Promise.all([bookContent, bookReviews]);
   if (retrieval[0]) {
     /* This is only true if both the promise resolved AND the post exists. Checking for just the promise causes
     nonexistent posts to return an empty object and array due to my return statement returning an object by default */
     let content = retrieval[0];
     let reviews = retrieval[1];
-    return { ...content, reviews };
+    let rating = reviews[0].avgRating;
+    return { ...content, rating, reviews };
   }
 }
 
