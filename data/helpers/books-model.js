@@ -29,7 +29,7 @@ async function findById(id) {
       username: "users.username",
       firstName: "users.firstName",
       lastName: "users.lastName",
-      thumbnailUrl: "users.thumbnailUrl"
+      thumbnailUrl: "users.thumbnailurl"
     })
     .innerJoin("users", "books.user_id", "users.id")
     .where({ "books.id": id })
