@@ -94,8 +94,13 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const book = req.body;
-
+  let book = {};
+  if (req.body.imageUrl) {
+    book = { ...req.body, image_url: req.body.imageUrl };
+    delete book.imageUrl;
+  } else {
+    book = req.body;
+  }
   try {
     const editedBook = await db.update(book, id);
     if (editedBook) {

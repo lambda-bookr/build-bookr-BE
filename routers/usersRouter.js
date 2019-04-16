@@ -37,7 +37,13 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const user = req.body;
+  let user = {};
+  if (req.body.thumbnailUrl) {
+    user = { ...req.body, thumbnail_url: req.body.thumbnailUrl };
+    delete user.thumbnailUrl;
+  } else {
+    user = { ...req.body };
+  }
   try {
     const editedUser = await db.update(user, id);
     if (editedUser) {
