@@ -31,16 +31,46 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const book = req.body;
-  try {
-    const newBook = await db.create(book);
-    if (newBook) {
-      res.status(201).json(newBook);
-    }
-  } catch (error) {
+  const {
+    title,
+    user_id,
+    author,
+    price,
+    publisher,
+    description,
+    imageUrl
+  } = req.body;
+  if (
+    !title ||
+    !user_id ||
+    !author ||
+    !price ||
+    !publisher ||
+    !description ||
+    !imageUrl
+  ) {
     res
-      .status(500)
-      .json({ message: `Your book could not be posted ${error}.` });
+      .status(401)
+      .json({ message: "Please do not leave any of the book fields blank." });
+  } else {
+    try {
+      const newBook = await db.create({
+        title,
+        user_id,
+        author,
+        price,
+        publisher,
+        description,
+        image_url: imageUrl
+      });
+      if (newBook) {
+        res.status(201).json(newBook);
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: `Your book could not be posted ${error}.` });
+    }
   }
 });
 

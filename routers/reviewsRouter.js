@@ -19,16 +19,22 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const review = req.body;
-  try {
-    const newReview = await db.create(review);
-    if (newReview) {
-      res.status(201).json(newReview);
-    }
-  } catch (error) {
+  const { review, rating, book_id, user_id } = req.body;
+  if (!review || !rating || !book_id || !user_id) {
     res
-      .status(500)
-      .json({ message: `Your review could not be posted ${error}.` });
+      .status(401)
+      .json({ message: "Please do not leave any of the review fields blank." });
+  } else {
+    try {
+      const newReview = await db.create(req.body);
+      if (newReview) {
+        res.status(201).json(newReview);
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: `Your review could not be posted ${error}.` });
+    }
   }
 });
 

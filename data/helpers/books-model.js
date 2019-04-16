@@ -49,14 +49,6 @@ async function findById(id) {
   }
 }
 
-// let bookReviews = db.raw(
-//   `select reviews.id as id, users.username as username, reviews.review as review, reviews.rating as rating, users.thumbnailUrl as thumbnailUrl,
-//   (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as avgRating
-//   from reviews
-//   join users on reviews.user_id = users.id
-//   where reviews.book_id = ${id}`
-// ); combined reviews and avg rating query into one, but this only works in SQLite for now. Will try and get it working for postgreSQL
-
 async function create(item) {
   const [id] = await db("books")
     .insert(item)
