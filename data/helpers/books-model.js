@@ -10,7 +10,7 @@ module.exports = {
 
 async function find() {
   const books = await db.raw(
-    `select books.id as id, books.user_id as user_id, books.title as title, books.author as author, books.price as price, books.publisher as publisher, books.imageurl as imageUrl, books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = books.id) as rating from books join reviews on reviews.book_id = books.id group by books.id order by books.id`
+    `select books.id as id, books.user_id as user_id, books.title as title, books.author as author, books.price as price, books.publisher as publisher, books.image_url as "imageUrl", books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = books.id) as rating from books join reviews on reviews.book_id = books.id group by books.id order by books.id`
   );
   if (process.env.DB_ENVIRONMENT === "production") {
     return books.rows;
@@ -20,7 +20,7 @@ async function find() {
 
 async function findById(id) {
   let bookContent = db.raw(
-    `select books.id as id, books.user_id as user_id, users.firstname as firstName, users.lastname as lastName, users.username as username, users.thumbnailurl as thumbnailUrl, books.title as title, books.author as author, books.price as price, books.publisher as publisher, books.imageurl as imageUrl, books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as rating from books join reviews on reviews.book_id = books.id join users on books.user_id = users.id where books.id = ${id}`
+    `select books.id as id, books.user_id as user_id, users.first_name as "firstName", users.last_name as "lastName", users.username as username, users.thumbnail_url as "thumbnailUrl", books.title as title, books.author as author, books.price as price, books.publisher as publisher, books.image_url as "imageUrl", books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = ${id}) as rating from books join reviews on reviews.book_id = books.id join users on books.user_id = users.id where books.id = ${id}`
   );
   let bookReviews = db("reviews")
     .select({
@@ -28,7 +28,7 @@ async function findById(id) {
       review: "reviews.review",
       rating: "reviews.rating",
       username: "users.username",
-      thumbnailUrl: "users.thumbnailurl"
+      thumbnailUrl: "users.thumbnail_url"
     })
     .innerJoin("users", "reviews.user_id", "users.id")
     .where({ "reviews.book_id": id });
