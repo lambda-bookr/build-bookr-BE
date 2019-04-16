@@ -16,6 +16,14 @@ async function find() {
 
 async function findById(id) {
   const user = await db("users")
+    .select({
+      id: "id",
+      firstNname: "first_name",
+      lastName: "last_name",
+      username: "username",
+      password: "password",
+      thumbnailUrl: "thumbnail_url"
+    })
     .where({ id })
     .first();
   return user;
