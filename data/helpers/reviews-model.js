@@ -15,7 +15,7 @@ async function find(id) {
       review: "reviews.review",
       rating: "reviews.rating",
       username: "users.username",
-      thumbnailUrl: "users.thumbnailurl"
+      thumbnailUrl: "users.thumbnail_url"
     })
     .innerJoin("users", "reviews.user_id", "users.id")
     .orderBy("id", "asc")
@@ -30,7 +30,7 @@ async function findById(id) {
       review: "reviews.review",
       rating: "reviews.rating",
       username: "users.username",
-      thumbnailUrl: "users.thumbnailurl"
+      thumbnailUrl: "users.thumbnail_url"
     })
     .innerJoin("users", "reviews.user_id", "users.id")
     .where({ "reviews.id": id })

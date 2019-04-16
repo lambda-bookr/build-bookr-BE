@@ -2,15 +2,15 @@ exports.up = function(knex, Promise) {
   return knex.schema
     .createTable("users", table => {
       table.increments();
-      table.string("firstname", 30).notNullable();
-      table.string("lastname", 40).notNullable();
+      table.string("first_name", 30).notNullable();
+      table.string("last_name", 40).notNullable();
       table
         .string("username", 30)
         .notNullable()
         .unique();
       table.string("password", 100).notNullable();
       table
-        .string("thumbnailurl", 256)
+        .string("thumbnail_url", 256)
         .defaultTo("https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg");
     })
     .createTable("books", table => {
@@ -27,7 +27,7 @@ exports.up = function(knex, Promise) {
       table.float("price").notNullable();
       table.string("publisher", 40).notNullable();
       table.string("description", 600);
-      table.string("imageurl", 256);
+      table.string("image_url", 256);
     })
     .createTable("reviews", table => {
       table.increments();
