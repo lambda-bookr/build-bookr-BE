@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
         .unique();
       table.string("password", 100).notNullable();
       table
-        .string("thumbnailUrl", 256)
+        .string("thumbnailurl", 256)
         .defaultTo("https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg");
     })
     .createTable("books", table => {
@@ -27,7 +27,7 @@ exports.up = function(knex, Promise) {
       table.float("price").notNullable();
       table.string("publisher", 40).notNullable();
       table.string("description", 600);
-      table.string("imageUrl", 256);
+      table.string("imageurl", 256);
     })
     .createTable("reviews", table => {
       table.increments();

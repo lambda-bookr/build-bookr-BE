@@ -10,7 +10,7 @@ module.exports = {
 
 async function find() {
   const books = await db.raw(
-    `select books.id as id, books.user_id as user_id, books.name as name, books.author as author, books.price as price, books.publisher as publisher, books.imageUrl as imageUrl, books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = books.id) as rating from books join reviews on reviews.book_id = books.id group by books.id`
+    `select books.id as id, books.user_id as user_id, books.name as name, books.author as author, books.price as price, books.publisher as publisher, books.imageurl as imageUrl, books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = books.id) as rating from books join reviews on reviews.book_id = books.id group by books.id`
   );
   return books;
 }
@@ -20,7 +20,7 @@ async function findById(id) {
     .select({
       id: "books.id",
       user_id: "books.user_id",
-      imageUrl: "books.imageUrl",
+      imageUrl: "books.imageurl",
       author: "books.author",
       name: "books.name",
       price: "books.price",
@@ -36,14 +36,15 @@ async function findById(id) {
     .first()
     .innerJoin("reviews", "reviews.book_id", "books.id")
     .avg("rating as rating")
-    .where({ "reviews.book_id": id });
+    .where({ "reviews.book_id": id })
+    .groupBy("books.id");
   let bookReviews = db("reviews")
     .select({
       id: "reviews.id",
       review: "reviews.review",
       rating: "reviews.rating",
       username: "users.username",
-      thumbnailUrl: "users.thumbnailUrl"
+      thumbnailUrl: "users.thumbnailurl"
     })
     .innerJoin("users", "reviews.user_id", "users.id")
     .where({ "reviews.book_id": id });
