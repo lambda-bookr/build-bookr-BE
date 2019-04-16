@@ -18,7 +18,7 @@ async function findById(id) {
   const user = await db("users")
     .select({
       id: "id",
-      firstNname: "first_name",
+      firstName: "first_name",
       lastName: "last_name",
       username: "username",
       password: "password",
