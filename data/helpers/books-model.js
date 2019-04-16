@@ -9,7 +9,9 @@ module.exports = {
 };
 
 async function find() {
-  const books = await db("books");
+  const books = await db.raw(
+    `select books.id as id, books.user_id as user_id, books.name as name, books.author as author, books.price as price, books.publisher as publisher, books.imageUrl as imageUrl, books.description as description, (select avg(reviews.rating) from reviews where reviews.book_id = books.id) as rating from books join reviews on reviews.book_id = books.id group by books.id`
+  );
   return books;
 }
 
@@ -31,7 +33,10 @@ async function findById(id) {
     })
     .innerJoin("users", "books.user_id", "users.id")
     .where({ "books.id": id })
-    .first();
+    .first()
+    .innerJoin("reviews", "reviews.book_id", "books.id")
+    .avg("rating as rating")
+    .where({ "reviews.book_id": id });
   let bookReviews = db("reviews")
     .select({
       id: "reviews.id",
@@ -42,17 +47,13 @@ async function findById(id) {
     })
     .innerJoin("users", "reviews.user_id", "users.id")
     .where({ "reviews.book_id": id });
-  let rating = db("reviews")
-    .avg({ rating: "rating" })
-    .where({ book_id: id });
-  const retrieval = await Promise.all([bookContent, bookReviews, rating]);
+  const retrieval = await Promise.all([bookContent, bookReviews]);
   if (retrieval[0]) {
     /* This is only true if both the promise resolved AND the post exists. Checking for just the promise causes
     nonexistent posts to return an empty object and array due to my return statement returning an object by default */
     let content = retrieval[0];
     let reviews = retrieval[1];
-    let [rating] = retrieval[2]; // Each review has an avgRating on it, I am just grabbing the avgRating from the first review
-    return { ...content, rating: rating.rating, reviews };
+    return { ...content, reviews };
   }
 }
 
