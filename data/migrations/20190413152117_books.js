@@ -23,7 +23,7 @@ exports.up = function(knex, Promise) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       table.string("author", 40).notNullable();
-      table.string("name", 40).notNullable();
+      table.string("title", 40).notNullable();
       table.float("price").notNullable();
       table.string("publisher", 40).notNullable();
       table.string("description", 600);

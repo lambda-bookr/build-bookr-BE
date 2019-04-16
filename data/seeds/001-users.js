@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const fakeUsers = require("../dummyData/fakeUsers")["users"];
 
 // const createFakeUser = () => ({
-//   firstName: faker.name.firstName(),
-//   lastName: faker.name.lastName(),
+//   firstname: faker.name.firstName(),
+//   lastname: faker.name.lastName(),
 //   username: faker.internet.userName(),
 //   password: faker.internet.password()
 // }); used this to create fake users file in dummyData
