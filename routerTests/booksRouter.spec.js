@@ -2,21 +2,6 @@ const request = require("supertest");
 const server = require("../api/server.js");
 const db = require("../data/dbConfig.js");
 
-const post = {
-  user_id: 1,
-  firstName: "Darryl",
-  lastName: "Welch",
-  username: "Golda_Mohr",
-  thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
-  title: "Fantastic Cotton Sausages",
-  author: "Jana Wunsch",
-  price: 125,
-  publisher: "Ferry Inc",
-  imageUrl: "http://lorempixel.com/640/480",
-  description:
-    "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
-};
-
 describe("server.js", () => {
   beforeEach(async () => {
     await db("books").truncate();
@@ -45,6 +30,20 @@ describe("server.js", () => {
       expect(response.type).toBe("application/json");
     });
     it("should return requested object", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       await request(server)
         .post("/api/books")
         .send(post);
@@ -58,18 +57,60 @@ describe("server.js", () => {
   });
   describe("POST /books", () => {
     it("should return status code 201 if successful", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       const response = await request(server)
         .post("/api/books")
         .send(post);
       expect(response.status).toBe(201);
     });
     it("should return json if successful", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       const response = await request(server)
         .post("/api/books")
         .send(post);
       expect(response.type).toBe("application/json");
     });
     it("should return created object if successful", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       const response = await request(server)
         .post("/api/books")
         .send(post);
@@ -86,6 +127,20 @@ describe("server.js", () => {
       expect(response.status).toBe(422);
     });
     it("should fail with status code 500 if title is not unique", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       const response = await request(server)
         .post("/api/books")
         .send(post);
@@ -97,6 +152,20 @@ describe("server.js", () => {
   });
   describe("DEL /books/:id", () => {
     it("Should return status code 200 OK", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       await request(server)
         .post("/api/books")
         .send(post);
@@ -104,6 +173,20 @@ describe("server.js", () => {
       expect(response.status).toBe(200);
     });
     it("should return json", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       await request(server)
         .post("/api/books")
         .send(post);
@@ -111,6 +194,20 @@ describe("server.js", () => {
       expect(response.type).toBe("application/json");
     });
     it("should return deleted object", async () => {
+      const post = {
+        user_id: 1,
+        firstName: "Darryl",
+        lastName: "Welch",
+        username: "Golda_Mohr",
+        thumbnailUrl: "https://pbs.twimg.com/media/C8QsNInXUAAyjZQ.jpg",
+        title: "Fantastic Cotton Sausages",
+        author: "Jana Wunsch",
+        price: 125,
+        publisher: "Ferry Inc",
+        imageUrl: "http://lorempixel.com/640/480",
+        description:
+          "Voluptate facilis ipsa impedit optio praesentium id quisquam. Deserunt facere mollitia quidem praesentium. Cum quia dolores ut dolores deleniti cupiditate. Libero optio nam consequatur perspiciatis et. Sed ullam amet qui voluptatem repellat minus consequatur. Delectus dicta voluptate atque incidunt neque ut quod."
+      };
       await request(server)
         .post("/api/books")
         .send(post);

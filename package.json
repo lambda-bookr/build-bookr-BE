@@ -6,7 +6,7 @@
   "author": "VictorGoic0 <vgoico000@citymail.cuny.edu>",
   "license": "MIT",
   "scripts": {
-    "test": "cross-env DB_ENVIRONMENT=testing && jest --watch --verbose",
+    "test": "cross-env DB_ENVIRONMENT=testing jest --watch --verbose",
     "start": "node index.js",
     "server": "nodemon index.js"
   },
