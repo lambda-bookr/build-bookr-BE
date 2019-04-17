@@ -50,14 +50,11 @@ async function findById(id) {
 }
 
 async function create(item) {
-  console.log(item);
   const [id] = await db("books")
     .insert(item)
     .returning("id");
   if (id) {
     const book = await findById(id);
-    console.log(id);
-    console.log(book);
     return book;
   }
 }
