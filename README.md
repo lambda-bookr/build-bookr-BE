@@ -50,22 +50,31 @@ This project is a RESTful API built using Node and Express. The purpose of this 
 # Log In and Registration
 
 **POST** `https://bookr-backend.herokuapp.com/api/auth/register` will create a new user and send back a token. Username, password, firstName, lastName are required fields.
+
 **POST** `https://bookr-backend.herokuapp.com/api/auth/login` will log the user in, and send back a token. Username and password required.
 
 # Books
 
 **GET** `https://bookr-backend.herokuapp.com/api/books` will return an array of books.
+
 **GET** by ID `https://bookr-backend.herokuapp.com/api/books/:id` will return an object corresponding to the book at that ID.
+
 **POST** `https://bookr-backend.herokuapp.com/api/books` will add a new book, and return the created object. user_id, author, name, price, and publisher are required fields. Description and imageUrl (image of the book cover) are optional fields.
+
 **DEL** `https://bookr-backend.herokuapp.com/api/books/:id` will delete the book at this ID, and return the deleted object.
+
 **PUT** `https://bookr-backend.herokuapp.com/api/books/:id` will edit the book at this ID, and return the edited object.
 
 # Reviews
 
 **GET** `https://bookr-backend.herokuapp.com/api/books/:id/reviews` will return an array of reviews for the book at this id.
+
 **GET** `https://bookr-backend.herokuapp.com/api/reviews/:id` will return an object of the review at this id.
+
 **POST** `https://bookr-backend.herokuapp.com/api/reviews` will post a review, and return the created object. The review, rating, book_id, and user_id are REQUIRED fields.
+
 **DEL** `https://bookr-backend.herokuapp.com/api/reviews/:id` will delete the review at this id, and return the deleted object.
+
 **PUT** `https://bookr-backend.herokuapp.com/api/reviews/:id` will edit the review at this id, and return the edited object.
 
 If you are running the project locally, every endpoint here is the same, but the heroku URL is replaced with `http://localhost:5000/`. For example, `GET` `http://localhost:5000/api/books` will return an array of books.
