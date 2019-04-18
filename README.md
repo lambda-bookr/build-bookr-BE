@@ -47,17 +47,17 @@ This project is a RESTful API built using Node and Express. The purpose of this 
 
 ## Endpoints
 
-# Log In and Registration
+### Log In and Registration
 
 **POST** `https://bookr-backend.herokuapp.com/api/auth/register` will create a new user and send back a token. Username, password, firstName, lastName are required fields.
 
 **POST** `https://bookr-backend.herokuapp.com/api/auth/login` will log the user in, and send back a token. Username and password required.
 
-# Books
+### Books
 
 **GET** `https://bookr-backend.herokuapp.com/api/books` will return an array of books.
 
-**GET** by ID `https://bookr-backend.herokuapp.com/api/books/:id` will return an object corresponding to the book at that ID.
+**GET** `https://bookr-backend.herokuapp.com/api/books/:id` will return an object corresponding to the book at that ID.
 
 **POST** `https://bookr-backend.herokuapp.com/api/books` will add a new book, and return the created object. user_id, author, name, price, and publisher are required fields. Description and imageUrl (image of the book cover) are optional fields.
 
@@ -65,7 +65,7 @@ This project is a RESTful API built using Node and Express. The purpose of this 
 
 **PUT** `https://bookr-backend.herokuapp.com/api/books/:id` will edit the book at this ID, and return the edited object.
 
-# Reviews
+### Reviews
 
 **GET** `https://bookr-backend.herokuapp.com/api/books/:id/reviews` will return an array of reviews for the book at this id.
 
