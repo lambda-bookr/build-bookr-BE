@@ -13,8 +13,8 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use("/api/books", booksRouter);
-server.use("/api/reviews", reviewsRouter);
+server.use("/api/books", authorization, booksRouter);
+server.use("/api/reviews", authorization, reviewsRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/users", authorization, usersRouter);
 
