@@ -77,4 +77,12 @@ This project is a RESTful API built using Node and Express. The purpose of this 
 
 **PUT** `https://bookr-backend.herokuapp.com/api/reviews/:id` will edit the review at this id, and return the edited object.
 
+## Users
+
+**GET** `https://bookr-backend.herokuapp.com/api/users/:id` will return the user with this id.
+
+**PUT** `https://bookr-backend.herokuapp.com/api/users/:id` will edit the user info at this id.
+
+**DEL** `https://bookr-backend.herokuapp.com/api/users/:id` will delete the user info at this id.
+
 **If you are running the project locally, every endpoint here is the same, but the heroku URL is replaced with `http://localhost:5000/`. For example, `GET` `http://localhost:5000/api/books` will return an array of books.**
